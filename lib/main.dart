@@ -6,7 +6,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();  // initialize Firebase
 
-  // Quick connection check
+  // Quick connection check terminal ke andar
   if (Firebase.apps.isNotEmpty) {
     print("✅ Firebase is connected");
   } else {
