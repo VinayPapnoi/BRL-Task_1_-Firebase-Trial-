@@ -1,18 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';  // add this
 import 'package:currency_converter/currency_converter_material_page.dart';
+import 'package:flutter/material.dart';
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();  // initialize Firebase
-
-  // Quick connection check terminal ke andar
-  if (Firebase.apps.isNotEmpty) {
-    print("✅ Firebase is connected");
-  } else {
-    print("❌ Firebase is NOT connected");
-  }
-
+void main() {
   runApp(const MyApp());
 }
 
