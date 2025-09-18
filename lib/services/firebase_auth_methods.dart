@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:trial/utils/showSnackBar.dart';
 
 class FirebaseAuthMethods {
@@ -39,8 +40,34 @@ class FirebaseAuthMethods {
 
   Future<void> sendEmailVerification(BuildContext context) async {
     try {
-      _auth.currentUser!.sendEmailVerification();
+      await _auth.currentUser!.sendEmailVerification();
       showSnackBar(context, 'Email Verification Sent');
+    } on FirebaseAuthException catch (e) {
+      showSnackBar(context, e.message!);
+    }
+  }
+
+  Future<void> signInWithGoogle(BuildContext context) async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      if (googleUser == null) return; // user cancelled
+
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      UserCredential userCredential =
+          await _auth.signInWithCredential(credential);
+
+      if (userCredential.user != null) {
+        if (userCredential.additionalUserInfo!.isNewUser) {
+        }
+      }
     } on FirebaseAuthException catch (e) {
       showSnackBar(context, e.message!);
     }

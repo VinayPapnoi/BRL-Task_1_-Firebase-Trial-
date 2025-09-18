@@ -1,8 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:trial/services/firebase_auth_methods.dart';
 import 'package:trial/widgets/custom_textfield.dart';
 import 'package:trial/widgets/custom_button.dart';
 import 'package:trial/screens/signup_email_password_screen.dart';
 import 'package:trial/screens/login_email_password_screen.dart';
+
+import '../services/firebase_auth_methods.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -31,7 +35,14 @@ class _LoginScreenState extends State<LoginScreen> {
               text: 'Email/Passwork Log in',
             ),
 
-            CustomButton(onTap: () {}, text: 'Google Sign in'),
+            CustomButton(
+              onTap: () {
+                FirebaseAuthMethods(
+                  FirebaseAuth.instance,
+                ).signInWithGoogle(context);
+              },
+              text: 'Google Sign in',
+            ),
           ],
         ),
       ),
