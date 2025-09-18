@@ -13,35 +13,30 @@ class _EmailPasswordLoginState extends State<EmailPasswordLogin> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  void dispose() {
-    super.dispose();
-    emailController.dispose();
-    passwordController.dispose();
+  void loginUser() {
+    // Your login logic here
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text('Login', style: TextStyle(fontSize: 30)),
-          SizedBox(height: MediaQuery.of(context).size.height * 0.08),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 20),
-            child: CustomTextField(
-              controller: emailController,
-              hintText: 'Enter Your Email',
-            ),
-          ),
-          const SizedBox(height: 20),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 20),
-            child: CustomTextField(
+      body: Center(
+        // Center everything on screen like signup page
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text("Login", style: TextStyle(fontSize: 24)),
+            const SizedBox(height: 20),
+            CustomTextField(controller: emailController, hintText: 'Email'),
+            const SizedBox(height: 10),
+            CustomTextField(
               controller: passwordController,
-              hintText: 'Enter Yuor Password',
+              hintText: 'Password',
             ),
-          ),
-        ],
+            const SizedBox(height: 20),
+            ElevatedButton(onPressed: loginUser, child: const Text("Login")),
+          ],
+        ),
       ),
     );
   }

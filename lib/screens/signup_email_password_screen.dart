@@ -27,7 +27,6 @@ class _EmailPasswordSignupState extends State<EmailPasswordSignup> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        // Center everything on screen
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
