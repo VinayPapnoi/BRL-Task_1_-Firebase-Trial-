@@ -16,8 +16,32 @@ class FirebaseAuthMethods {
         email: email,
         password: password,
       );
-      
-    } on FirebaseAuthException catch (e) {  
+      await sendEmailVerification(context);
+    } on FirebaseAuthException catch (e) {
+      showSnackBar(context, e.message!);
+    }
+  }
+
+  Future<void> loginWithEmail({
+    required String email,
+    required String password,
+    required BuildContext context,
+  }) async {
+    try {
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      if (!_auth.currentUser!.emailVerified) {
+        await sendEmailVerification(context);
+      }
+    } on FirebaseAuthException catch (e) {
+      showSnackBar(context, e.message!);
+    }
+  }
+
+  Future<void> sendEmailVerification(BuildContext context) async {
+    try {
+      _auth.currentUser!.sendEmailVerification();
+      showSnackBar(context, 'Email Verification Sent');
+    } on FirebaseAuthException catch (e) {
       showSnackBar(context, e.message!);
     }
   }
