@@ -3,6 +3,8 @@ import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:trial/screens/login_screen.dart';
+import 'package:trial/screens/signup_email_password_screen.dart';
+import 'package:trial/screens/login_email_password_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,14 +20,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //i removed the const from this to remve the error
-    return  MaterialApp(
+    return MaterialApp(
       title: 'Flutter Firebase task 1',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: const LoginScreen(),
       routes: {
         EmailPasswordSignup.routeName: (context) => const EmailPasswordSignup(),
         EmailPasswordLogin.routeName: (context) => EmailPasswordLogin(),
-        PhoneScreen.routename: (context) => const PhoneScreen(),
       },
     );
   }

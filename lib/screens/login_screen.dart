@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:trial/widgets/custom_textfield.dart';
+import 'package:trial/widgets/custom_button.dart';
+import 'package:trial/screens/signup_email_password_screen.dart';
+import 'package:trial/screens/login_email_password_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -26,12 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
               },
               text: 'Email/Passwork Log in',
             ),
-            CustomButton(
-              onTap: () {
-                Navigator.pushNamed(context, PhoneScreen.routeName);
-              },
-              text: 'Phone Sign In',
-            ),
+
             CustomButton(onTap: () {}, text: 'Google Sign in'),
           ],
         ),
