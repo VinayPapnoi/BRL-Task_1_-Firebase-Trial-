@@ -19,7 +19,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //i removed the const from this to remve the error
     return MaterialApp(
       title: 'Flutter Firebase task 1',
       theme: ThemeData(primarySwatch: Colors.blue),

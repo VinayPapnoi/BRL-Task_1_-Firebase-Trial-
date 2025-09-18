@@ -14,14 +14,13 @@ class _EmailPasswordLoginState extends State<EmailPasswordLogin> {
   final TextEditingController passwordController = TextEditingController();
 
   void loginUser() {
-    // Your login logic here
+
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        // Center everything on screen like signup page
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
