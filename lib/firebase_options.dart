@@ -89,4 +89,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'myfirst-ec363.firebasestorage.app',
     measurementId: 'G-41S0TRV7PN',
   );
+
 }
