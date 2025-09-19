@@ -55,7 +55,7 @@ class _EmailPasswordSignupState extends State<EmailPasswordSignup> {
               style: TextStyle(fontSize: 30),
             ),
             CustomTextField(controller: emailController, hintText: 'Email'),
-            CustomTextField(controller: passwordController, hintText: 'Password'),
+            CustomTextField(controller: passwordController, hintText: 'Password',),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _isLoading ? null : signUpUser, 

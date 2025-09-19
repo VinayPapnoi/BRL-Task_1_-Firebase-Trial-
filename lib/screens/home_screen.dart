@@ -13,8 +13,29 @@ class HomeScreen extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(user.email!),
-
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center, // centers horizontally
+            children: [
+              const Text(
+                'Email: ',
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              ),
+              Text(
+                user.email!,
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+          const SizedBox(height: 40),
+          const Text(
+            'Jai Hind Sir',
+            style: TextStyle(
+              fontSize: 50,
+              fontWeight: FontWeight.bold,
+              color: Colors.blue,
+            ),
+          ),
+          const SizedBox(height: 30),
           if (!user.emailVerified)
             CustomButton(
               onTap: () {
@@ -38,6 +59,8 @@ class HomeScreen extends StatelessWidget {
             },
             text: 'Delete Account',
           ),
+          const SizedBox(height: 20),
+          
         ],
       ),
     );
