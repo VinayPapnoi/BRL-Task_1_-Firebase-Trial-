@@ -17,39 +17,61 @@ class _EmailPasswordSignupState extends State<EmailPasswordSignup> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
+  bool _isLoading = false;
+
+  @override
   void dispose() {
-    super.dispose();
-    emailController.dispose();
-    passwordController.dispose();
-  } 
-  void signUpUser() async {
-    context.read<FirebaseAuthMethods> ().signUpWithEmail(
-      email: emailController.text,
-      password: passwordController.text,
-      context: context
-    );
+    emailController.dispose();     
+    passwordController.dispose();  
+    super.dispose();              
   }
+
+  void signUpUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    await context.read<FirebaseAuthMethods>().signUpWithEmail(
+          email: emailController.text.trim(),    
+          password: passwordController.text.trim(),
+          context: context,
+        );
+
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text(
-            "Sign Up", 
-            style: TextStyle(fontSize: 30)),
-            CustomTextField(
-              controller: emailController, 
-              hintText: 'Email'
+      body: Padding(
+        padding: const EdgeInsets.all(16.0), 
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              "Sign Up",
+              style: TextStyle(fontSize: 30),
             ),
-            CustomTextField(
-              controller: passwordController,
-              hintText: 'Password',
+            CustomTextField(controller: emailController, hintText: 'Email'),
+            CustomTextField(controller: passwordController, hintText: 'Password'),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _isLoading ? null : signUpUser, 
+              child: _isLoading
+                  ? const SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                        strokeWidth: 2,
+                      ),
+                    )
+                  : const Text("Sign Up"),
             ),
-            ElevatedButton(onPressed: signUpUser, child: const Text("Sign Up"
-            )
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
