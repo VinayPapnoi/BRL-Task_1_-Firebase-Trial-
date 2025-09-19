@@ -8,6 +8,8 @@ class FirebaseAuthMethods {
   final FirebaseAuth _auth;
   FirebaseAuthMethods(this._auth);
 
+  User get user => _auth.currentUser!;
+
   Stream<User?> get authState => FirebaseAuth.instance.authStateChanges();
 
   Future<void> signUpWithEmail({
@@ -86,3 +88,4 @@ class FirebaseAuthMethods {
     }
   }
 }
+

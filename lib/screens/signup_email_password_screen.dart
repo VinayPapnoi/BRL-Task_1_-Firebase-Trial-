@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:trial/services/firebase_auth_methods.dart';
 import 'package:trial/widgets/custom_textfield.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -22,10 +23,10 @@ class _EmailPasswordSignupState extends State<EmailPasswordSignup> {
     passwordController.dispose();
   } 
   void signUpUser() async {
-    FirebaseAuthMethods(FirebaseAuth.instance).signUpWithEmail(
+    context.read<FirebaseAuthMethods> ().signUpWithEmail(
       email: emailController.text,
       password: passwordController.text,
-       context: context
+      context: context
     );
   }
   @override

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:trial/services/firebase_auth_methods.dart';
 import 'package:trial/widgets/custom_textfield.dart';
 import 'package:trial/widgets/custom_button.dart';
@@ -37,9 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
             CustomButton(
               onTap: () {
-                FirebaseAuthMethods(
-                  FirebaseAuth.instance,
-                ).signInWithGoogle(context);
+                context.read<FirebaseAuthMethods> ().signInWithGoogle(context);
               },
               text: 'Google Sign in',
             ),

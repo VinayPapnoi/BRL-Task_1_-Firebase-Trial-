@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:trial/services/firebase_auth_methods.dart';
 import 'package:trial/widgets/custom_textfield.dart';
 
@@ -22,7 +23,7 @@ class _EmailPasswordLoginState extends State<EmailPasswordLogin> {
   }
 
   void loginUser() {
-    FirebaseAuthMethods(FirebaseAuth.instance).loginWithEmail(
+    context.read<FirebaseAuthMethods> ().loginWithEmail(
       email: emailController.text,
       password: passwordController.text,
       context: context,
