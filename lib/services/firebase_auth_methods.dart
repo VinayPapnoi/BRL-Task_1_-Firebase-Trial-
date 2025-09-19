@@ -35,7 +35,7 @@ class FirebaseAuthMethods {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
       if (!_auth.currentUser!.emailVerified) {
-        await sendEmailVerification(context);
+        showSnackBar(context, "Please verify your email to login.");
       }
     } on FirebaseAuthException catch (e) {
       showSnackBar(context, e.message!);

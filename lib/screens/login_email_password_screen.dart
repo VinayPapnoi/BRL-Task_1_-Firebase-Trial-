@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trial/screens/home_screen.dart';
 import 'package:trial/services/firebase_auth_methods.dart';
 import 'package:trial/widgets/custom_textfield.dart';
 
@@ -38,6 +39,14 @@ class _EmailPasswordLoginState extends State<EmailPasswordLogin> {
     setState(() {
       _isLoading = false;
     });
+
+    // ✅ After login, check if email is verified
+    final user = context.read<FirebaseAuthMethods>().user;
+    if (user.emailVerified) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
+      );
+    }
   }
 
   @override

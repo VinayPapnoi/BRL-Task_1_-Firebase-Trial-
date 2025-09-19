@@ -35,7 +35,7 @@ class HomeScreen extends StatelessWidget {
               color: Colors.blue,
             ),
           ),
-          const SizedBox(height: 30),
+          /*const SizedBox(height: 30),
           if (!user.emailVerified)
             CustomButton(
               onTap: () {
@@ -45,7 +45,7 @@ class HomeScreen extends StatelessWidget {
               },
               text: 'Verify Email',
             ),
-
+          */
           CustomButton(
             onTap: () {
               context.read<FirebaseAuthMethods>().signOut(context);
