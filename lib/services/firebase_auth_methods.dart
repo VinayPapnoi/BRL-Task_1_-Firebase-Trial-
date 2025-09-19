@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:trial/services/firebase_auth_methods.dart';
 import 'package:trial/utils/showSnackBar.dart';
 import 'package:flutter/foundation.dart';
 
@@ -87,5 +88,12 @@ class FirebaseAuthMethods {
       showSnackBar(context, e.message!);
     }
   }
-}
 
+  Future<void> signOut(BuildContext context) async {
+    try {
+      await _auth.signOut();
+    } on FirebaseAuthException catch (e) {
+      showSnackBar(context, e.message!);
+    }
+  }
+}
