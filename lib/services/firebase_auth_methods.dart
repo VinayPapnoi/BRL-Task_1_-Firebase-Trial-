@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:trial/utils/showSnackBar.dart';
+import 'package:flutter/foundation.dart';
 
 class FirebaseAuthMethods {
   final FirebaseAuth _auth;
@@ -49,23 +50,33 @@ class FirebaseAuthMethods {
 
   Future<void> signInWithGoogle(BuildContext context) async {
     try {
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      if (kIsWeb) {
+        GoogleAuthProvider googleProvider = GoogleAuthProvider();
 
-      if (googleUser == null) return; // user cancelled
+        googleProvider.addScope(
+          'https://www.googleapis.com/auth/contacts.readonly',
+        );
 
-      final GoogleSignInAuthentication googleAuth =
-          await googleUser.authentication;
+        await _auth.signInWithPopup(googleProvider);
+      } else {
+        final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
+        if (googleUser == null) return; // user cancelled
 
-      UserCredential userCredential =
-          await _auth.signInWithCredential(credential);
+        final GoogleSignInAuthentication googleAuth =
+            await googleUser.authentication;
 
-      if (userCredential.user != null) {
-        if (userCredential.additionalUserInfo!.isNewUser) {
+        final credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
+
+        UserCredential userCredential = await _auth.signInWithCredential(
+          credential,
+        );
+
+        if (userCredential.user != null) {
+          if (userCredential.additionalUserInfo!.isNewUser) {}
         }
       }
     } on FirebaseAuthException catch (e) {
