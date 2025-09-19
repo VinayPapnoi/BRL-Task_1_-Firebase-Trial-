@@ -24,14 +24,37 @@ class _EmailPasswordSignupState extends State<EmailPasswordSignup> {
     super.dispose();
   }
 
+  bool validatePassword(String password) {
+    final hasUpper = password.contains(RegExp(r'[A-Z]'));
+    final hasDigit = password.contains(RegExp(r'[0-9]'));
+    final hasSpecial = password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
+    final hasMinLength = password.length >= 8;
+
+    return hasUpper && hasDigit && hasSpecial && hasMinLength;
+  }
+
   void signUpUser() async {
+    final password = passwordController.text.trim();
+
+    if (!validatePassword(password)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "Password must be at least 8 characters long, "
+            "include an uppercase letter, a number, and a special character.",
+          ),
+        ),
+      );
+      return; // stop signup
+    }
+
     setState(() {
       _isLoading = true;
     });
 
     await context.read<FirebaseAuthMethods>().signUpWithEmail(
       email: emailController.text.trim(),
-      password: passwordController.text.trim(),
+      password: password,
       context: context,
     );
 

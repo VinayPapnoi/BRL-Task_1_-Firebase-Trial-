@@ -40,7 +40,6 @@ class _EmailPasswordLoginState extends State<EmailPasswordLogin> {
       _isLoading = false;
     });
 
-    // ✅ After login, check if email is verified
     final user = context.read<FirebaseAuthMethods>().user;
     if (user.emailVerified) {
       Navigator.of(context).pushReplacement(
