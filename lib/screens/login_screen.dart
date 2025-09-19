@@ -1,13 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trial/services/firebase_auth_methods.dart';
-import 'package:trial/widgets/custom_textfield.dart';
 import 'package:trial/widgets/custom_button.dart';
 import 'package:trial/screens/signup_email_password_screen.dart';
 import 'package:trial/screens/login_email_password_screen.dart';
-
-import '../services/firebase_auth_methods.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -21,28 +17,46 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            CustomButton(
-              onTap: () {
-                Navigator.pushNamed(context, EmailPasswordSignup.routeName);
-              },
-              text: 'Email/Password Sign Up',
-            ),
-            CustomButton(
-              onTap: () {
-                Navigator.pushNamed(context, EmailPasswordLogin.routeName);
-              },
-              text: 'Email/Passwork Log in',
-            ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0), // add padding
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center, // center vertically
+            crossAxisAlignment: CrossAxisAlignment.stretch, // stretch buttons
+            children: [
+              const Text(
+                "Welcome",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 30),
 
-            CustomButton(
-              onTap: () {
-                context.read<FirebaseAuthMethods> ().signInWithGoogle(context);
-              },
-              text: 'Google Sign in',
-            ),
-          ],
+              CustomButton(
+                onTap: () {
+                  Navigator.pushNamed(context, EmailPasswordSignup.routeName);
+                },
+                text: 'Email/Password Sign Up',
+              ),
+              const SizedBox(height: 15),
+
+              CustomButton(
+                onTap: () {
+                  Navigator.pushNamed(context, EmailPasswordLogin.routeName);
+                },
+                text: 'Email/Password Log In',
+              ),
+              const SizedBox(height: 15),
+
+              CustomButton(
+                onTap: () {
+                  context.read<FirebaseAuthMethods>().signInWithGoogle(context);
+                },
+                text: 'Google Sign In',
+              ),
+            ],
+          ),
         ),
       ),
     );
