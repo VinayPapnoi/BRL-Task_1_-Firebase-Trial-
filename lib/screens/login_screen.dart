@@ -18,7 +18,6 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          // Background Image
           SizedBox.expand(
             child: Image.asset(
               'assets/login.png', 

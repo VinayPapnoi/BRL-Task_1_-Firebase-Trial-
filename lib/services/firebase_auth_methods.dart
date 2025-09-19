@@ -11,21 +11,22 @@ class FirebaseAuthMethods {
   User get user => _auth.currentUser!;
   Stream<User?> get authState => _auth.authStateChanges();
 
-  
   Future<void> signUpWithEmail({
     required String email,
     required String password,
     required BuildContext context,
   }) async {
     try {
-      await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
       await sendEmailVerification(context);
     } on FirebaseAuthException catch (e) {
       showSnackBar(context, e.message!);
     }
   }
 
-  
   Future<void> loginWithEmail({
     required String email,
     required String password,
@@ -50,18 +51,20 @@ class FirebaseAuthMethods {
     }
   }
 
-
   Future<void> signInWithGoogle(BuildContext context) async {
     try {
       if (kIsWeb) {
         GoogleAuthProvider googleProvider = GoogleAuthProvider();
-        googleProvider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+        googleProvider.addScope(
+          'https://www.googleapis.com/auth/contacts.readonly',
+        );
         await _auth.signInWithPopup(googleProvider);
       } else {
         final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
         if (googleUser == null) return;
 
-        final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+        final GoogleSignInAuthentication googleAuth =
+            await googleUser.authentication;
         final credential = GoogleAuthProvider.credential(
           accessToken: googleAuth.accessToken,
           idToken: googleAuth.idToken,
@@ -74,9 +77,11 @@ class FirebaseAuthMethods {
     }
   }
 
- 
   Future<void> signOut(BuildContext context) async {
     try {
+      if (!kIsWeb) {
+        await GoogleSignIn().signOut();
+      }
       await _auth.signOut();
     } on FirebaseAuthException catch (e) {
       showSnackBar(context, e.message!);
@@ -109,7 +114,9 @@ class FirebaseAuthMethods {
       } else {
         message = "Failed to send reset email.";
       }
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(message)));
     }
   }
 }

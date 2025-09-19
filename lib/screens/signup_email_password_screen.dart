@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trial/services/firebase_auth_methods.dart';
 import 'package:trial/widgets/custom_textfield.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class EmailPasswordSignup extends StatefulWidget {
   static String routeName = '/signup-email-password';
@@ -50,8 +48,7 @@ class _EmailPasswordSignupState extends State<EmailPasswordSignup> {
         children: [
           Image.asset('assets/register.png', fit: BoxFit.cover),
 
-          Container(color: Color.fromRGBO(0, 0, 0, 0.3)),
-
+          Container(color: Color.fromRGBO(0, 0, 0, 0)),
 
           Center(
             child: Container(

@@ -47,7 +47,7 @@ class _EmailPasswordLoginState extends State<EmailPasswordLogin> {
         fit: StackFit.expand,
         children: [
           Image.asset('assets/register.png', fit: BoxFit.cover),
-          Container(color: Color.fromRGBO(0, 0, 0, 0.3)),
+          Container(color: Color.fromRGBO(0, 0, 0, 0)),
           Center(
             child: Container(
               padding: const EdgeInsets.all(20),
