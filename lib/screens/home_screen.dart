@@ -14,23 +14,30 @@ class HomeScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(user.email!),
-          
-          if(!user.emailVerified) 
+
+          if (!user.emailVerified)
             CustomButton(
               onTap: () {
-                context
-                .read<FirebaseAuthMethods>()
-                .sendEmailVerification(context);
+                context.read<FirebaseAuthMethods>().sendEmailVerification(
+                  context,
+                );
               },
               text: 'Verify Email',
             ),
-            
-            CustomButton(
-              onTap:() {
-                context.read<FirebaseAuthMethods>().signOut(context);
-              },
-               text: 'Sign Out'
-            ),
+
+          CustomButton(
+            onTap: () {
+              context.read<FirebaseAuthMethods>().signOut(context);
+            },
+            text: 'Sign Out',
+          ),
+
+          CustomButton(
+            onTap: () {
+              context.read<FirebaseAuthMethods>().deleteAccount(context);
+            },
+            text: 'Delete Account',
+          ),
         ],
       ),
     );

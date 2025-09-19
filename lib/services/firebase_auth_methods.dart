@@ -96,4 +96,12 @@ class FirebaseAuthMethods {
       showSnackBar(context, e.message!);
     }
   }
+
+  Future<void> deleteAccount(BuildContext context) async {
+    try {
+      await _auth.currentUser!.delete();
+    } on FirebaseAuthException catch (e) {
+      showSnackBar(context, e.message!);
+    }
+  }
 }
