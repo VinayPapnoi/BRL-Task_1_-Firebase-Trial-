@@ -21,9 +21,9 @@ class _EmailPasswordSignupState extends State<EmailPasswordSignup> {
 
   @override
   void dispose() {
-    emailController.dispose();     
-    passwordController.dispose();  
-    super.dispose();              
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
   }
 
   void signUpUser() async {
@@ -32,10 +32,10 @@ class _EmailPasswordSignupState extends State<EmailPasswordSignup> {
     });
 
     await context.read<FirebaseAuthMethods>().signUpWithEmail(
-          email: emailController.text.trim(),    
-          password: passwordController.text.trim(),
-          context: context,
-        );
+      email: emailController.text.trim(),
+      password: passwordController.text.trim(),
+      context: context,
+    );
 
     setState(() {
       _isLoading = false;
@@ -45,33 +45,62 @@ class _EmailPasswordSignupState extends State<EmailPasswordSignup> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16.0), 
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              "Sign Up",
-              style: TextStyle(fontSize: 30),
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Image.asset('assets/register.png', fit: BoxFit.cover),
+
+          Container(color: Color.fromRGBO(0, 0, 0, 0.3)),
+
+
+          Center(
+            child: Container(
+              padding: const EdgeInsets.all(20),
+              margin: const EdgeInsets.symmetric(horizontal: 16),
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(255, 255, 255, 0.85),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                    "Sign Up",
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  CustomTextField(
+                    controller: emailController,
+                    hintText: 'Email',
+                  ),
+                  const SizedBox(height: 10),
+                  CustomTextField(
+                    controller: passwordController,
+                    hintText: 'Password',
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: _isLoading ? null : signUpUser,
+                    child: _isLoading
+                        ? const SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                              strokeWidth: 2,
+                            ),
+                          )
+                        : const Text("Sign Up"),
+                  ),
+                ],
+              ),
             ),
-            CustomTextField(controller: emailController, hintText: 'Email'),
-            CustomTextField(controller: passwordController, hintText: 'Password',),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _isLoading ? null : signUpUser, 
-              child: _isLoading
-                  ? const SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(
-                        color: Colors.white,
-                        strokeWidth: 2,
-                      ),
-                    )
-                  : const Text("Sign Up"),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

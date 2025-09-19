@@ -16,48 +16,69 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0), // add padding
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center, // center vertically
-            crossAxisAlignment: CrossAxisAlignment.stretch, // stretch buttons
-            children: [
-              const Text(
-                "Welcome",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 30),
-
-              CustomButton(
-                onTap: () {
-                  Navigator.pushNamed(context, EmailPasswordSignup.routeName);
-                },
-                text: 'Email/Password Sign Up',
-              ),
-              const SizedBox(height: 15),
-
-              CustomButton(
-                onTap: () {
-                  Navigator.pushNamed(context, EmailPasswordLogin.routeName);
-                },
-                text: 'Email/Password Log In',
-              ),
-              const SizedBox(height: 15),
-
-              CustomButton(
-                onTap: () {
-                  context.read<FirebaseAuthMethods>().signInWithGoogle(context);
-                },
-                text: 'Google Sign In',
-              ),
-            ],
+      body: Stack(
+        children: [
+          // Background Image
+          SizedBox.expand(
+            child: Image.asset(
+              'assets/login.png', 
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
+         
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const Text(
+                    "Welcome",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white, 
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+
+                  CustomButton(
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        EmailPasswordSignup.routeName,
+                      );
+                    },
+                    text: 'Email/Password Sign Up',
+                  ),
+                  const SizedBox(height: 15),
+
+                  CustomButton(
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        EmailPasswordLogin.routeName,
+                      );
+                    },
+                    text: 'Email/Password Log In',
+                  ),
+                  const SizedBox(height: 15),
+
+                  CustomButton(
+                    onTap: () {
+                      context.read<FirebaseAuthMethods>().signInWithGoogle(
+                        context,
+                      );
+                    },
+                    text: 'Google Sign In',
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
