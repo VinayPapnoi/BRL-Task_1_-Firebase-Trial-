@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:trial/services/firebase_auth_methods.dart';
 import 'package:trial/utils/showSnackBar.dart';
 import 'package:flutter/foundation.dart';
 
@@ -10,25 +9,23 @@ class FirebaseAuthMethods {
   FirebaseAuthMethods(this._auth);
 
   User get user => _auth.currentUser!;
+  Stream<User?> get authState => _auth.authStateChanges();
 
-  Stream<User?> get authState => FirebaseAuth.instance.authStateChanges();
-
+  
   Future<void> signUpWithEmail({
     required String email,
     required String password,
     required BuildContext context,
   }) async {
     try {
-      await _auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      await _auth.createUserWithEmailAndPassword(email: email, password: password);
       await sendEmailVerification(context);
     } on FirebaseAuthException catch (e) {
       showSnackBar(context, e.message!);
     }
   }
 
+  
   Future<void> loginWithEmail({
     required String email,
     required String password,
@@ -53,42 +50,31 @@ class FirebaseAuthMethods {
     }
   }
 
+
   Future<void> signInWithGoogle(BuildContext context) async {
     try {
       if (kIsWeb) {
         GoogleAuthProvider googleProvider = GoogleAuthProvider();
-
-        googleProvider.addScope(
-          'https://www.googleapis.com/auth/contacts.readonly',
-        );
-
+        googleProvider.addScope('https://www.googleapis.com/auth/contacts.readonly');
         await _auth.signInWithPopup(googleProvider);
       } else {
         final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+        if (googleUser == null) return;
 
-        if (googleUser == null) return; // user cancelled
-
-        final GoogleSignInAuthentication googleAuth =
-            await googleUser.authentication;
-
+        final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
         final credential = GoogleAuthProvider.credential(
           accessToken: googleAuth.accessToken,
           idToken: googleAuth.idToken,
         );
 
-        UserCredential userCredential = await _auth.signInWithCredential(
-          credential,
-        );
-
-        if (userCredential.user != null) {
-          if (userCredential.additionalUserInfo!.isNewUser) {}
-        }
+        await _auth.signInWithCredential(credential);
       }
     } on FirebaseAuthException catch (e) {
       showSnackBar(context, e.message!);
     }
   }
 
+ 
   Future<void> signOut(BuildContext context) async {
     try {
       await _auth.signOut();
@@ -102,6 +88,28 @@ class FirebaseAuthMethods {
       await _auth.currentUser!.delete();
     } on FirebaseAuthException catch (e) {
       showSnackBar(context, e.message!);
+    }
+  }
+
+  Future<void> resetPassword({
+    required String email,
+    required BuildContext context,
+  }) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Password reset email sent!")),
+      );
+    } on FirebaseAuthException catch (e) {
+      String message;
+      if (e.code == 'invalid-email') {
+        message = "Invalid email format.";
+      } else if (e.code == 'user-not-found') {
+        message = "No account found with this email.";
+      } else {
+        message = "Failed to send reset email.";
+      }
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
     }
   }
 }
