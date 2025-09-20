@@ -1,30 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
+import 'package:trial/screens/home_screen.dart';
+import 'package:trial/services/firebase_auth_methods.dart';
+import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-
-import 'package:trial/services/firebase_auth_methods.dart';
-import 'package:trial/screens/home_screen.dart';
 import 'package:trial/screens/login_screen.dart';
 import 'package:trial/screens/signup_email_password_screen.dart';
 import 'package:trial/screens/login_email_password_screen.dart';
 
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await dotenv.load(fileName: ".env");
-
-  await Firebase.initializeApp(
-    options: FirebaseOptions(
-      apiKey: dotenv.env['FIREBASE_API_KEY']!,
-      appId: dotenv.env['FIREBASE_APP_ID']!,
-      messagingSenderId: dotenv.env['FIREBASE_MESSAGING_SENDER_ID']!,
-      projectId: dotenv.env['FIREBASE_PROJECT_ID']!,
-      storageBucket: dotenv.env['FIREBASE_STORAGE_BUCKET']!,
-    ),
-  );
-
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
@@ -38,13 +27,13 @@ class MyApp extends StatelessWidget {
         Provider<FirebaseAuthMethods>(
           create: (_) => FirebaseAuthMethods(FirebaseAuth.instance),
         ),
-        StreamProvider<User?>(
+        StreamProvider(
           create: (context) => context.read<FirebaseAuthMethods>().authState,
           initialData: null,
         ),
       ],
       child: MaterialApp(
-        title: 'Flutter Firebase App',
+        title: 'Flutter Firebase task 1',
         theme: ThemeData(primarySwatch: Colors.blue),
         home: const AuthWrapper(),
         routes: {
@@ -64,7 +53,7 @@ class AuthWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     final firebaseUser = context.watch<User?>();
 
-    if (firebaseUser != null && firebaseUser.emailVerified) {
+    if (firebaseUser != null) {
       return const HomeScreen();
     } else {
       return const LoginScreen();

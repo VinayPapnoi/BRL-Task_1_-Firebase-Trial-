@@ -3,6 +3,7 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -40,9 +41,10 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyD1FlglgmMi7MHW_eTlY-ANNy0MeRvZI3U',
-    appId: '1:998282615273:web:84c0de447a3705d71a5378',
+  static final FirebaseOptions web = FirebaseOptions(
+    //apiKey: 'AIzaSyD1FlglgmMi7MHW_eTlY-ANNy0MeRvZI3U',
+    apiKey: dotenv.env['API_KEY'] ?? '',
+    appId: dotenv.env['APP_ID'] ?? '',
     messagingSenderId: '998282615273',
     projectId: 'myfirst-ec363',
     authDomain: 'myfirst-ec363.firebaseapp.com',
@@ -50,44 +52,47 @@ class DefaultFirebaseOptions {
     measurementId: 'G-XBGKNPL8KF',
   );
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAeOFCi-Lteo1qqjcDnjV9tZqLtvOpJFzM',
-    appId: '1:998282615273:android:d514354231d66b9c1a5378',
+  static final FirebaseOptions android = FirebaseOptions(
+    apiKey: dotenv.env['API_KEY'] ?? '',
+    appId: dotenv.env['APP_ID'] ?? '',
     messagingSenderId: '998282615273',
     projectId: 'myfirst-ec363',
     storageBucket: 'myfirst-ec363.firebasestorage.app',
   );
 
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyC4RrHCPf-Y_SB7wPnU3iNL3ELRa2uXZ-M',
-    appId: '1:998282615273:ios:2ec889d79796b8f41a5378',
+  static final FirebaseOptions ios = FirebaseOptions(
+    apiKey: dotenv.env['API_KEY'] ?? '',
+    appId: dotenv.env['APP_ID'] ?? '',
     messagingSenderId: '998282615273',
     projectId: 'myfirst-ec363',
     storageBucket: 'myfirst-ec363.firebasestorage.app',
-    androidClientId: '998282615273-cf7ikp3kb29g8trmq6etcut1rlaa3emt.apps.googleusercontent.com',
-    iosClientId: '998282615273-fgqnggb9co7fu73usbvofn6t4g57155d.apps.googleusercontent.com',
+    androidClientId:
+        '998282615273-cf7ikp3kb29g8trmq6etcut1rlaa3emt.apps.googleusercontent.com',
+    iosClientId:
+        '998282615273-fgqnggb9co7fu73usbvofn6t4g57155d.apps.googleusercontent.com',
     iosBundleId: 'com.example.trial',
   );
 
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyC4RrHCPf-Y_SB7wPnU3iNL3ELRa2uXZ-M',
-    appId: '1:998282615273:ios:2ec889d79796b8f41a5378',
+  static final FirebaseOptions macos = FirebaseOptions(
+    apiKey: dotenv.env['API_KEY'] ?? '',
+    appId: dotenv.env['APP_ID'] ?? '',
     messagingSenderId: '998282615273',
     projectId: 'myfirst-ec363',
     storageBucket: 'myfirst-ec363.firebasestorage.app',
-    androidClientId: '998282615273-cf7ikp3kb29g8trmq6etcut1rlaa3emt.apps.googleusercontent.com',
-    iosClientId: '998282615273-fgqnggb9co7fu73usbvofn6t4g57155d.apps.googleusercontent.com',
+    androidClientId:
+        '998282615273-cf7ikp3kb29g8trmq6etcut1rlaa3emt.apps.googleusercontent.com',
+    iosClientId:
+        '998282615273-fgqnggb9co7fu73usbvofn6t4g57155d.apps.googleusercontent.com',
     iosBundleId: 'com.example.trial',
   );
 
-  static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyD1FlglgmMi7MHW_eTlY-ANNy0MeRvZI3U',
-    appId: '1:998282615273:web:0716255b051394ba1a5378',
+  static final FirebaseOptions windows = FirebaseOptions(
+    apiKey: dotenv.env['API_KEY'] ?? '',
+    appId: dotenv.env['APP_ID'] ?? '',
     messagingSenderId: '998282615273',
     projectId: 'myfirst-ec363',
     authDomain: 'myfirst-ec363.firebaseapp.com',
     storageBucket: 'myfirst-ec363.firebasestorage.app',
     measurementId: 'G-41S0TRV7PN',
   );
-
 }
